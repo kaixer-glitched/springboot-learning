@@ -19,7 +19,7 @@ public class PlayerServices {
     }
 
     public Player createPlayer(Player player) {
-        player.setPlayerId(firstId++);  // the first created player will receive the 1L declared at the top first.
+        player.setPlayerId(firstId);    // the first created player will receive the 1L declared at the top first.
         players.add(player);            // add player in the ArrayList of players
         firstId++;                      // memory id increment by 1 for each player created
         return player;                  // return a player object back to whoever calls it, good practice :D
