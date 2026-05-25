@@ -9,8 +9,8 @@ import java.util.List;
 @Getter
 @Service
 public class PlayerServices {
-                                        // have no idea why I used ArrayList
-    ArrayList<Player> players = new ArrayList<>();
+                                                // have no idea why I used ArrayList
+    List<Player> players = new ArrayList<>();   // Claude said that I should use the interface then declare it as an ArrayList so that we can change it if we want.
 
     Long firstId = 1L;
 
