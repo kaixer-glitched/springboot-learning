@@ -1,6 +1,7 @@
 package com.shootit.kobe;
 
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PlayerServices {
         return players;
     }
 
+    // we don't need @NonNull as we can never receive null players due Jakarta validations and @Valid annotation in the controller.
     public Player createPlayer(Player player) {
         player.setPlayerId(firstId);    // the first created player will receive the 1L declared at the top first.
         players.add(player);            // add player in the ArrayList of players

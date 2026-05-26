@@ -19,7 +19,7 @@ public class Player {
     private String playerName;
 
     @Min(value = 0, message = "Player jersey cannot be NEGATIVE.")
-    @Max(value = 99, message = "Player jersey cannot be HIGHER than 100.")
+    @Max(value = 99, message = "Player jersey cannot be HIGHER than 99.")
     private int jerseyNumber;
 
     @Min(value = 18, message = "Player must be 18 and ABOVE to be drafted.")
