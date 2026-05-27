@@ -19,4 +19,17 @@ public class PlayerController {
         Player createdPlayer = playerServices.createPlayer(player);
         return ResponseEntity.ok(createdPlayer);
     }
+
+    @PutMapping("/{playerId}")
+    public ResponseEntity<Player> updatePlayer(@PathVariable Long playerId, @Valid @RequestBody Player player) {
+        // I just did a research, here's what I found:
+        // Player updatedPlayer is not a new Player object since it does not create a new instance of Player with "new" keyword.
+
+        Player updatedPlayer = playerServices.updatePlayer(playerId, player);
+        // since the method updatePlayer returns null or a player, we can use that here
+        // to check whether this updatedPlayer does really exist.
+        // if not we will return a 404 using ResponseEntity.notFound().build();
+        if (updatedPlayer == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(updatedPlayer);
+    }
 }
