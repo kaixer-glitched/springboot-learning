@@ -67,6 +67,8 @@ public class PlayerServices {
         return  playerToUpdate;
     }
 
+    // we will return a generic
+    // Optional<Player> means we will promise a generic, but we cannot say that it is a player or null.
     public Optional<Player> getPlayerById(Long id) {
         return players.stream()
                 .filter(p -> p.getPlayerId().equals(id))

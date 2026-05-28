@@ -38,6 +38,17 @@ public class PlayerController {
     // more modern-solution
     @GetMapping("/{id}")
     public ResponseEntity<Player> searchPlayer(@PathVariable Long id) {
+        /*
+        Optional<Player> playerFound = playerServices.getPlayerById(id);
+
+        if (playerFound.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(playerFound.get());
+         */
+
+
+
        return playerServices.getPlayerById(id)
                .map(ResponseEntity::ok)
                .orElse(ResponseEntity.notFound().build());
