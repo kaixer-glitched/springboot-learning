@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/players")
@@ -31,5 +33,13 @@ public class PlayerController {
         // if not we will return a 404 using ResponseEntity.notFound().build();
         if (updatedPlayer == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(updatedPlayer);
+    }
+
+    // more modern-solution
+    @GetMapping("/{id}")
+    public ResponseEntity<Player> searchPlayer(@PathVariable Long id) {
+       return playerServices.getPlayerById(id)
+               .map(ResponseEntity::ok)
+               .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Service
@@ -64,5 +65,11 @@ public class PlayerServices {
         playerToUpdate.setPosition(updatedPlayer.getPosition());
 
         return  playerToUpdate;
+    }
+
+    public Optional<Player> getPlayerById(Long id) {
+        return players.stream()
+                .filter(p -> p.getPlayerId().equals(id))
+                .findFirst();
     }
 }

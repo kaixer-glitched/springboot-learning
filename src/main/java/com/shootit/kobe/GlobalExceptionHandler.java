@@ -13,7 +13,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // have no idea what this does but ok? let's ask AI if i have the chance. - day 1
+    // have no idea what this does but ok? let's ask AI if I have the chance. - day 1
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
