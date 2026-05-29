@@ -24,20 +24,22 @@ public class PlayerController {
 
     @PutMapping("/{playerId}")
     public ResponseEntity<Player> updatePlayer(@PathVariable Long playerId, @Valid @RequestBody Player player) {
-        // I just did a research, here's what I found:
-        // Player updatedPlayer is not a new Player object since it does not create a new instance of Player with "new" keyword.
+        // we will use Optional since we updated our playerServices update function
+        // we will store the value that we got from the playerServices.updatePlayer() (after process)
+        // we then will return the updatedPlayer back as a response
+        // if the updatedPlayer has an actual value, then the map will unwrap ResponseEntity.ok for us
+        // if it's a null, then give .notFound() / 404
+        Optional<Player> updatedPlayer = playerServices.updatePlayer(playerId, player);
 
-        Player updatedPlayer = playerServices.updatePlayer(playerId, player);
-        // since the method updatePlayer returns null or a player, we can use that here
-        // to check whether this updatedPlayer does really exist.
-        // if not we will return a 404 using ResponseEntity.notFound().build();
-        if (updatedPlayer == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(updatedPlayer);
+        return updatedPlayer
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // more modern-solution
     @GetMapping("/{id}")
     public ResponseEntity<Player> searchPlayer(@PathVariable Long id) {
+        // a simpler approach
         /*
         Optional<Player> playerFound = playerServices.getPlayerById(id);
 
@@ -46,11 +48,19 @@ public class PlayerController {
         }
         return ResponseEntity.ok(playerFound.get());
          */
-
-
-
+        // advanced approach said by chat
        return playerServices.getPlayerById(id)
                .map(ResponseEntity::ok)
                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Player> deletePlayer(@PathVariable Long id) {
+        Optional<Player> updatedPlayer = playerServices.deletePlayer(id);
+
+        // well yea this is cleaner lol
+        return updatedPlayer
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

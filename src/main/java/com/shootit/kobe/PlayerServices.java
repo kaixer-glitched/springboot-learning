@@ -21,6 +21,7 @@ public class PlayerServices {
 
     // we don't need @NonNull as we can never receive null players due Jakarta validations and @Valid annotation in the controller.
     public Player createPlayer(Player player) {
+
         player.setPlayerId(firstId);    // the first created player will receive the 1L declared at the top first.
         players.add(player);            // add player in the ArrayList of players
         firstId++;                      // memory id increment by 1 for each player created
@@ -28,43 +29,36 @@ public class PlayerServices {
     }
 
     // we won't decrement the id cause it must stay the same regardless
-    public Player deletePlayer(Long id) {
-        // .stream()
-        Player playerToDelete = players.stream()
-                .filter(p -> p.getPlayerId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public Optional<Player> deletePlayer(Long id) {
 
-        if (playerToDelete == null) return null;
-        players.remove(playerToDelete);
-        return playerToDelete;
+        Optional<Player> player = players.stream()
+               .filter(p -> p.getPlayerId().equals(id))
+               .findFirst();
+
+        // I prefer non-lambda style as of the moment
+        if (player.isPresent()) {
+            players.remove(player.orElseThrow());
+        }
+        return player;
     }
+    // did a revamp for this block too lmao
+    public Optional<Player> updatePlayer(Long id, Player updatedPlayer) {
+        Optional<Player> playerToUpdate = players.stream()
+                        .filter(p -> p.getPlayerId().equals(id))
+                        .findFirst();
 
-    public Player updatePlayer(Long id, Player updatedPlayer) {
-        // does this player first exist?
-        // we use stream to do sets of actions for the data
-        Player playerToUpdate = players.stream()
-                .filter(p -> p.getPlayerId().equals(id))
-                .findFirst()
-                .orElse(null);
+        // I don't need a return statement inside since regardless of value, we need to return the playerToUpdate
+        if (playerToUpdate.isPresent()) {
+            // create a player object then unwrap the value of <Optional> inside the Player object
+            Player player = playerToUpdate.get();
 
-        if (playerToUpdate == null) return null;
-
-        // playerToUpdate is still A PLAYER object, so it has the getters and setters from the PLAYER class
-        // we can use the setters to set new information for this existing player
-        // take the previous data from the OLD player via GETTERS
-        // use the SETTERS to give this playerToUpdate object
-        // playerToUpdate is a reference object created in this method as shown at the top
-        // reference means it points to an old/existing object, rather than creating one a new
-        // then just assign new data to him from the OLD one
-
-        playerToUpdate.setPlayerName(updatedPlayer.getPlayerName());
-        playerToUpdate.setJerseyNumber(updatedPlayer.getJerseyNumber());
-        playerToUpdate.setAge(updatedPlayer.getAge());
-        playerToUpdate.setYearsPro(updatedPlayer.getYearsPro());
-        playerToUpdate.setPosition(updatedPlayer.getPosition());
-
-        return  playerToUpdate;
+            player.setPlayerName(updatedPlayer.getPlayerName());
+            player.setJerseyNumber(updatedPlayer.getJerseyNumber());
+            player.setAge(updatedPlayer.getAge());
+            player.setYearsPro(updatedPlayer.getYearsPro());
+            player.setPosition(updatedPlayer.getPosition());
+        }
+        return playerToUpdate;
     }
 
     // we will return a generic
