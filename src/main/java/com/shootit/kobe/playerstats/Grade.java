@@ -1,4 +1,4 @@
-package com.shootit.kobe;
+package com.shootit.kobe.playerstats;
 
 public enum Grade {
     A_PLUS, A, A_MINUS,

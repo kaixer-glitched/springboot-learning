@@ -1,4 +1,4 @@
-package com.shootit.kobe;
+package com.shootit.kobe.playerstats;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -39,19 +39,4 @@ public class PlayerStats {
     @Max(value = 99, message = "Playmaking Defense cannot be HIGHER than 99.")
     private int playmaking;
 
-    private Grade getGrade(int rating) {
-        if (rating >= 96) return Grade.A_PLUS;
-        if (rating >= 93) return Grade.A;
-        if (rating >= 90) return Grade.A_MINUS;
-        if (rating >= 86) return Grade.B_PLUS;
-        if (rating >= 83) return Grade.B;
-        if (rating >= 80) return Grade.B_MINUS;
-        if (rating >= 76) return Grade.C_PLUS;
-        if (rating >= 73) return Grade.C;
-        if (rating >= 70) return Grade.C_MINUS;
-        if (rating >= 66) return Grade.D_PLUS;
-        if (rating >= 63) return Grade.D;
-        if (rating >= 60) return Grade.D_MINUS;
-        return Grade.F;
-    }
 }

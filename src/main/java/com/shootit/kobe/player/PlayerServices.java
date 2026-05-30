@@ -1,4 +1,4 @@
-package com.shootit.kobe;
+package com.shootit.kobe.player;
 
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public class PlayerServices {
 
         // I don't need a return statement inside since regardless of value, we need to return the playerToUpdate
         if (playerToUpdate.isPresent()) {
-            // create a player object then unwrap the value of <Optional> inside the Player object
+            // create a player object (reference) then unwrap the value of <Optional> inside the Player object
             Player player = playerToUpdate.get();
 
             player.setPlayerName(updatedPlayer.getPlayerName());

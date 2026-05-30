@@ -1,4 +1,4 @@
-package com.shootit.kobe;
+package com.shootit.kobe.player;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
